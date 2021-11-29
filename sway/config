@@ -1,0 +1,181 @@
+
+set $term alacritty
+
+font pango: Noto Sans 18
+
+set $menu bemenu-run -p ">>" -n -l 6 --fn "Noto Sans 14" --hf="#bf5151" --hb="#191818" --nb="#191818" --nf="#d2d2d2" --tb="#191818" --tf="#bf5151" --fb="#191818" --ff="#d2d2d2"
+
+set $wall "~/Pictures/walls/wall"
+
+output * bg $wall fill
+
+exec_always {
+	gsettings set org.gnome.desktop.interface icon-theme 'Papirus-Dark'
+}
+
+default_border pixel 2
+set $bg #191818
+set $bod_f #474343
+set $bod_u #191818
+set $text #d2d2d2
+client.focused   $bod_f $bg $text $bod_f $bod_f
+client.unfocused $bod_u $bg $text $bod_u $bod_u
+client.focused_inactive $bod_u $bg $text $bod_u $bod_u
+
+# inputs
+input "type:touchpad" {
+	drag enabled
+	tap enabled
+	natural_scroll enabled
+	middle_emulation enabled
+}
+input "type:keyboard" {
+	xkb_layout us
+}
+input "type:touch" {
+	map_to_output eDP-1
+}
+
+# keybinds
+# mod4: windows key, mod1: alt key
+set $mod Mod4
+
+# vim like home row direction keys
+set $left h
+set $down j
+set $up k
+set $right l
+
+# open terminal
+bindsym $mod+Return exec $term
+
+# kill focused window
+bindsym $mod+Shift+q kill
+
+# start your launcher
+bindsym $mod+d exec $menu
+
+# floating modifier
+floating_modifier $mod normal
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+
+# exit sway
+bindsym $mod+Shift+e exec swaynag -t warning -m 'You pressed the exit shortcut. Do you really want to exit sway? This will end your Wayland session.' -b 'Yes, exit sway' 'swaymsg exit'
+
+# move your focus with hjkl
+	bindsym $mod+$left focus left
+	bindsym $mod+$down focus down
+	bindsym $mod+$up focus up
+	bindsym $mod+$right focus right
+# move your focus with arrow keys
+	bindsym $mod+Left focus left
+	bindsym $mod+Down focus down
+	bindsym $mod+Up focus up
+	bindsym $mod+Right focus right
+
+# move the focused window
+	bindsym $mod+Shift+$left move left
+	bindsym $mod+Shift+$down move down
+	bindsym $mod+Shift+$up move up
+	bindsym $mod+Shift+$right move right
+# with arrow keys
+	bindsym $mod+Shift+Left move left
+	bindsym $mod+Shift+Down move down
+	bindsym $mod+Shift+Up move up
+	bindsym $mod+Shift+Right move right
+
+# switch to workspace
+	bindsym $mod+1 workspace number 1
+	bindsym $mod+2 workspace number 2
+	bindsym $mod+3 workspace number 3
+	bindsym $mod+4 workspace number 4
+	bindsym $mod+5 workspace number 5
+	bindsym $mod+6 workspace number 6
+
+# move focused container to workspace
+	bindsym $mod+Shift+1 move container to workspace number 1
+	bindsym $mod+Shift+2 move container to workspace number 2
+	bindsym $mod+Shift+3 move container to workspace number 3
+	bindsym $mod+Shift+4 move container to workspace number 4
+	bindsym $mod+Shift+5 move container to workspace number 5
+	bindsym $mod+Shift+6 move container to workspace number 6
+
+# split layout
+	bindsym $mod+b splith
+	bindsym $mod+v splitv
+
+# switch layouts
+	bindsym $mod+s layout stacking
+	bindsym $mod+w layout tabbed
+	bindsym $mod+e layout toggle split
+
+# resizing containers
+mode "resize" {
+	bindsym $left resize shrink width 10px
+	bindsym $down resize grow height 10px
+	bindsym $up resize shrink height 10px
+	bindsym $right resize grow width 10px
+	# with arrow keys
+	bindsym Left resize shrink width 10px
+	bindsym Down resize grow height 10px
+	bindsym Up resize shrink height 10px
+	bindsym Right resize grow width 10px
+
+	# Return to default mode
+	bindsym Return mode "default"
+	bindsym Escape mode "default"
+}
+bindsym $mod+r mode "resize"
+
+# scratchpad
+bindsym $mod+Shift+minus move scratchpad
+bindsym $mod+minus scratchpad show
+
+# fullscreen
+	bindsym $mod+f fullscreen global
+
+# toggle floating mode
+	bindsym $mod+Shift+space floating toggle
+
+# swap focus between the tiling & floating area
+	bindsym $mod+space focus mode_toggle
+
+# move focus to the parent container
+	bindsym $mod+a focus parent
+
+# gaps
+gaps inner 4
+gaps outer 4
+
+# audio control
+exec playerctld daemon
+bindsym XF86AudioRaiseVolume exec pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec pactl set-sink-mute 0 toggle
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+
+# brightness control
+bindsym XF86MonBrightnessUp exec light -A 5
+bindsym XF86MonBrightnessDown exec light -U 5
+
+
+# bar
+bar {
+	swaybar_command waybar
+}
+
+# clipboard
+exec wl-paste -t text --watch clipman store &
+
+# cursor
+seat seat0 xcursor_theme default 30
+
+# notification
+exec mako &
+
+include /etc/sway/config.d/*
+#

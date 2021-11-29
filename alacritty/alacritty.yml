@@ -1,0 +1,49 @@
+
+window:
+  padding:
+    x: 14
+    y: 14
+  dimensions:
+    columns: 60
+    lines: 15
+
+font:
+  normal:
+    family: JetBrainsMono Nerd Font
+    style: Regular
+  bold:
+    family: JetBrainsMono Nerd Font
+    style: Bold
+  italic:
+    family: JetBrainsMono Nerd Font
+    style: Italic
+  size: 14
+
+colors:
+  # Default colors
+  primary:
+    background: '0x191818'
+    foreground: '0xd2d2d2'
+
+  # Normal colors
+  normal:
+    black:   '0x191818'
+    red:     '0xbf5151'
+    green:   '0xa3ac4d'
+    yellow:  '0xef9e65'
+    blue:    '0x67b0eb'
+    magenta: '0xda89b5'
+    cyan:    '0x88c5b6'
+    white:   '0xf7f7f7'
+
+  # Bright colors
+  bright:
+    black:   '0x414348'
+    red:     '0xde7979'
+    green:   '0xcdd57d'
+    yellow:  '0xf3c469'
+    blue:    '0x85b1d6'
+    magenta: '0xcda8d8'
+    cyan:    '0x8cd3c9'
+    white:   '0xefefef'
+    
